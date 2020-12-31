@@ -13,9 +13,17 @@ export const App = () => {
     const newTodos = [...incompleteTodos, todoText];
     setIncompleteTodos(newTodos);
     setTodoText("");
-  }
+  };
 
-  //onChangeで変わるたびにvalueが変わるようにしている
+  //何番目の行を判定したい場合、map,indexで関数をわたし、その関数の中で何番目に処理をしていくかをおこなっていく
+  const onClickDelete = (index) => {
+    const newTodos = [...incompleteTodos];
+    newTodos.splice(index, 1);
+    setIncompleteTodos(newTodos);
+  };
+
+  //onChangeで変わる値をvalueの中にしている
+  //
   return (
     <>
      <div className="input-area">
@@ -25,13 +33,14 @@ export const App = () => {
      <div className="incomplete-area">
        <p className="title">未完了のTODO</p>
        <ul>
-        {incompleteTodos.map((todo) => {
+        {incompleteTodos.map((todo, index) => {
           return (
             //keyは仮想DOMは変更後とその差分だけ表示しているので何番目かを把握するためにかく
             <div key={todo} className="list-row">
               <li>{todo}</li>
               <button>完了</button>
-              <button>削除</button>
+              {/*アロー関数で処理しないと、リロードの際にindex分（個数分）処理が発火する*/}
+              <button　onClick={() => onClickDelete(index)}>削除</button>
             </div>
           );
         })}
