@@ -2,12 +2,25 @@ import React, { useState } from "react";
 import "./styles.css";
 
 export const App = () => {
+  const[todoText, setTodoText] = useState('');//入力した場合を変数に入れる
   const [incompleteTodos, setIncompleteTodos] = useState(["aaaa","iiii"]);
-  const [completeTodos] = useState(['uuuuu']);
+  const [completeTodos, setcompleteTodos] = useState(["uuuuu"]);
+
+  const onChangeTodoText = (event) => setTodoText(event.target.value);
+
+  const onClickedAdd = () => {
+    if(todoText === "") return;
+    const newTodos = [...incompleteTodos, todoText];
+    setIncompleteTodos(newTodos);
+    setTodoText("");
+  }
+
+  //onChangeで変わるたびにvalueが変わるようにしている
   return (
     <>
      <div className="input-area">
-       <input placeholder="TODOを入力"/>
+       <input placeholder="TODOを入力" value={todoText} onChange={onChangeTodoText} />
+       <button onClick={onClickedAdd}>追加</button>
      </div>
      <div className="incomplete-area">
        <p className="title">未完了のTODO</p>
