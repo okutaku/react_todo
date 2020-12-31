@@ -3,8 +3,8 @@ import "./styles.css";
 
 export const App = () => {
   const[todoText, setTodoText] = useState('');//入力した場合を変数に入れる
-  const [incompleteTodos, setIncompleteTodos] = useState(["aaaa","iiii"]);
-  const [completeTodos, setcompleteTodos] = useState(["uuuuu"]);
+  const [incompleteTodos, setIncompleteTodos] = useState([]);
+  const [completeTodos, setCompleteTodos] = useState([]);
 
   const onChangeTodoText = (event) => setTodoText(event.target.value);
 
@@ -28,8 +28,17 @@ export const App = () => {
     
     const newCompleteTodos = [...completeTodos, incompleteTodos[index]];
     setIncompleteTodos(newIncompleteTodos);
-    setcompleteTodos(newCompleteTodos);
+    setCompleteTodos(newCompleteTodos);
   };
+
+  const onClickBack = (index) => {
+    const newCompleteTodos = [...completeTodos];
+    newCompleteTodos.splice(index, 1);
+
+    const newIncompleteTodos = [...incompleteTodos, completeTodos[index]];
+    setCompleteTodos(newCompleteTodos);
+    setIncompleteTodos(newIncompleteTodos);
+  }
 
   //onChangeで変わる値をvalueの中にしている
   //
